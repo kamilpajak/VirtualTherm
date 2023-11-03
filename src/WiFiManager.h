@@ -7,11 +7,9 @@
 
 class WiFiManager {
 public:
-  WiFiManager() { attemptConnection(initialReconnectDelay); }
+  WiFiManager() {}
 
-  void connect() { attemptConnection(initialReconnectDelay); }
-
-  void reconnect() { attemptConnection(initialReconnectDelay); }
+  void init() { attemptConnection(initialReconnectDelay); }
 
   bool isConnected() { return WiFi.status() == WL_CONNECTED; }
 
@@ -19,6 +17,8 @@ private:
   void attemptConnection(unsigned long delayAmount) {
     int attempts = 0;
     while (WiFi.status() != WL_CONNECTED && attempts < reconnectAttempts) {
+      WiFi.end();
+      delay(100);
       WiFi.begin(SECRET_SSID, SECRET_PASS);
       Serial.print("Attempting connection... Status: ");
       Serial.println(WiFi.status());

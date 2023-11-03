@@ -18,14 +18,14 @@ OpenMeteoManager openMeteoManager(wifiClient);
 int resistanceToDAC(double resistance);
 
 void setup() {
-  analogWriteResolution(DAC_RESOLUTION);
   Serial.begin(115200);
-  wifiManager.connect();
+  analogWriteResolution(DAC_RESOLUTION);
+  wifiManager.init();
 }
 
 void loop() {
   if (!wifiManager.isConnected()) {
-    wifiManager.reconnect();
+    wifiManager.init();
   }
 
   double temperature = openMeteoManager.getTemperature();
