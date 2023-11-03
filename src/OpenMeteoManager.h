@@ -1,6 +1,8 @@
 #ifndef OPENMETEOMANAGER_H
 #define OPENMETEOMANAGER_H
 
+#include "arduino_secrets.h"
+
 #include <Arduino.h>
 #include <ArduinoHttpClient.h>
 #include <ArduinoJson.h>
@@ -12,7 +14,8 @@ public:
 
   double getTemperature() {
     httpClient.beginRequest();
-    httpClient.get("/v1/forecast?latitude=50.13&longitude=19.04&current=temperature_2m&timezone=auto&forecast_days=1");
+    httpClient.get("/v1/forecast?latitude=" + String(LATITUDE) + "&longitude=" + String(LONGITUDE) +
+                   "&current=temperature_2m&timezone=auto&forecast_days=1");
     httpClient.endRequest();
 
     int statusCode = httpClient.responseStatusCode();
