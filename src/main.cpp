@@ -4,7 +4,6 @@
 #include "arduino_secrets.h"
 
 #include <Arduino.h>
-#include <WiFiNINA.h>
 
 #define DAC_PIN A0
 #define DAC_RESOLUTION 10

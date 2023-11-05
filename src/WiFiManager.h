@@ -2,7 +2,9 @@
 #define WIFIMANAGER_H
 
 #include "arduino_secrets.h"
+
 #include <Arduino.h>
+#include <SPI.h>
 #include <WiFiNINA.h>
 
 class WiFiManager {
