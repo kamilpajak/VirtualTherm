@@ -9,7 +9,6 @@ void tearDown(void) {
   // clean stuff up here
 }
 
-// Define a new test function for Pt1000::calculateResistance
 void test_calculateResistance(void) {
   const double TOLERANCE = 0.05;
   TEST_ASSERT_DOUBLE_WITHIN(TOLERANCE, 723.3, Pt1000::calculateResistance(-70.0));

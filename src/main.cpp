@@ -28,6 +28,11 @@ void loop() {
   }
 
   double temperature = openMeteoManager.getTemperature();
+  if (isnan(temperature)) {
+    Serial.println("Temperature retrieval failed. Retrying...");
+    // Optionally, add retry logic or error handling here.
+    return; // Skip the rest of the loop iteration.
+  }
   Serial.println("Temperature from API: " + String(temperature) + " °C");
 
   double resistance = Pt1000::calculateResistance(temperature);
