@@ -1,23 +1,23 @@
-// Pt1000.h
-#ifndef PT1000_H
-#define PT1000_H
+// Pt100.h
+#ifndef PT100_H
+#define PT100_H
 
 #include "Thermometer.h"
 #include <cmath>
 
-class Pt1000 : public Thermometer {
+class Pt100 : public Thermometer {
 public:
   static double calculateResistance(double temperature, TemperatureUnit unit);
 
 private:
-  static constexpr double R0 = 1000.0; // Resistance at 0°C
+  static constexpr double R0 = 100.0; // Resistance at 0°C
   static constexpr double A = 3.9083e-3;
   static constexpr double B = -5.775e-7;
   static constexpr double C_above_0 = 0;
   static constexpr double C_below_0 = -4.183e-12;
 };
 
-inline double Pt1000::calculateResistance(double temperature, TemperatureUnit unit) {
+inline double Pt100::calculateResistance(double temperature, TemperatureUnit unit) {
   temperature = convertTemperatureToCelsius(temperature, unit);
   double Rt;
   if (temperature >= 0) {
@@ -30,4 +30,4 @@ inline double Pt1000::calculateResistance(double temperature, TemperatureUnit un
   return Rt;
 }
 
-#endif // PT1000_H
+#endif // PT100_H
