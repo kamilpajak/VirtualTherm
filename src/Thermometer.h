@@ -2,7 +2,7 @@
 #ifndef THERMOMETER_H
 #define THERMOMETER_H
 
-#include "TemperatureUnits.h"
+#include "TemperatureUnit.h"
 #include <cmath>
 
 class Thermometer {

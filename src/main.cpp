@@ -35,8 +35,8 @@ void loop() {
   }
   Serial.println("Temperature from API: " + String(temperature) + " °C");
 
-  double resistance = Pt1000::calculateResistance(temperature);
-  Serial.println("Calculated Resistance: " + String(resistance) + " ohms");
+  double resistance = Pt1000::calculateResistance(temperature, TemperatureUnit::Celsius);
+  Serial.println("Calculated Resistance: " + String(resistance) + " Ω");
 
   int dacValue = resistanceToDAC(resistance);
   analogWrite(DAC_PIN, dacValue);
