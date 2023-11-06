@@ -1,9 +1,9 @@
 #include "OpenMeteoManager.h"
-#include "Pt1000.h"
 #include "WiFiManager.h"
 #include "arduino_secrets.h"
 
 #include <Arduino.h>
+#include <Pt1000.h>
 
 #define DAC_PIN A0
 #define DAC_RESOLUTION 10
@@ -13,6 +13,8 @@
 WiFiManager wifiManager;
 WiFiClient wifiClient;
 OpenMeteoManager openMeteoManager(wifiClient);
+
+Pt1000 sensor; // Create an instance of Pt1000
 
 int resistanceToDAC(double resistance);
 
@@ -35,7 +37,7 @@ void loop() {
   }
   Serial.println("Temperature from API: " + String(temperature) + " °C");
 
-  double resistance = Pt1000::calculateResistance(temperature, TemperatureUnit::Celsius);
+  double resistance = sensor.calculateResistance(temperature, TemperatureUnit::Celsius);
   Serial.println("Calculated Resistance: " + String(resistance) + " Ω");
 
   int dacValue = resistanceToDAC(resistance);
