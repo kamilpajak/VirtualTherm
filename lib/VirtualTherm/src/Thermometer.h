@@ -3,40 +3,37 @@
 #define THERMOMETER_H
 
 #include "TemperatureUnit.h"
-#include <cmath>
+#include <stdexcept>
 
 class Thermometer {
-protected:
+public:
   static double convertTemperature(double temperature, TemperatureUnit fromUnit, TemperatureUnit toUnit);
+
+private:
+  Thermometer() {} // Private constructor to prevent instantiation
 };
 
-inline double Thermometer::convertTemperature(double temperature, TemperatureUnit fromUnit, TemperatureUnit toUnit) {
-  // First convert the input to Celsius, which is the intermediate unit
-  double tempCelsius;
-  switch (fromUnit) {
-  case TemperatureUnit::Celsius:
-    tempCelsius = temperature;
-    break;
-  case TemperatureUnit::Fahrenheit:
+double Thermometer::convertTemperature(double temperature, TemperatureUnit fromUnit, TemperatureUnit toUnit) {
+  // First convert the input to Celsius as a base for further conversion
+  double tempCelsius = temperature;
+  if (fromUnit == TemperatureUnit::Fahrenheit) {
     tempCelsius = (temperature - 32) * 5.0 / 9.0;
-    break;
-  case TemperatureUnit::Kelvin:
+  } else if (fromUnit == TemperatureUnit::Kelvin) {
     tempCelsius = temperature - 273.15;
-    break;
+  } else if (fromUnit != TemperatureUnit::Celsius) {
+    throw std::invalid_argument("Unsupported 'from' temperature unit");
   }
 
-  // Then, convert from Celsius to the desired unit
-  switch (toUnit) {
-  case TemperatureUnit::Celsius:
+  // Then convert from Celsius to the desired unit
+  if (toUnit == TemperatureUnit::Celsius) {
     return tempCelsius;
-  case TemperatureUnit::Fahrenheit:
+  } else if (toUnit == TemperatureUnit::Fahrenheit) {
     return tempCelsius * 9.0 / 5.0 + 32;
-  case TemperatureUnit::Kelvin:
+  } else if (toUnit == TemperatureUnit::Kelvin) {
     return tempCelsius + 273.15;
+  } else {
+    throw std::invalid_argument("Unsupported 'to' temperature unit");
   }
-
-  // If we reach this point, the unit was not recognized. Handle the error as appropriate.
-  // Possibly throw an exception or return a sentinel value.
 }
 
 #endif // THERMOMETER_H
