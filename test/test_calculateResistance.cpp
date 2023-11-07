@@ -11,12 +11,22 @@ void tearDown(void) {
   // Clean up any resources after each test
 }
 
+void test_temperatureConversionError(void) {
+  bool errorThrown = false;
+  try {
+    // Intentionally using an invalid temperature unit to provoke an error
+    Thermometer::convertTemperature(100.0, static_cast<TemperatureUnit>(999), TemperatureUnit::Celsius);
+  } catch (const std::invalid_argument &e) {
+    errorThrown = true;
+  }
+  if (!errorThrown) {
+    TEST_FAIL_MESSAGE("Expected exception was not thrown.");
+  }
+}
+
 void assertResistanceWithinTolerance(RTD &sensor, double tolerance, double expectedResistance, double temperature,
                                      TemperatureUnit unit) {
   double actualResistance = sensor.calculateResistance(temperature, unit);
-  if (isnan(actualResistance)) {
-    TEST_FAIL_MESSAGE("Received NaN for resistance value.");
-  }
   TEST_ASSERT_DOUBLE_WITHIN(tolerance, expectedResistance, actualResistance);
 }
 
@@ -46,6 +56,7 @@ void test_calculatePt1000Resistance(void) {
 
 int main(int argc, char **argv) {
   UNITY_BEGIN();
+  RUN_TEST(test_temperatureConversionError);
   RUN_TEST(test_calculatePt100Resistance);
   RUN_TEST(test_calculatePt1000Resistance);
   UNITY_END();
