@@ -1,7 +1,6 @@
 #include <NickelRTD.h>
 #include <PlatinumRTD.h>
 #include <TemperatureUnit.h>
-#include <stdexcept>
 #include <unity.h>
 
 void setUp(void) {
@@ -13,15 +12,12 @@ void tearDown(void) {
 }
 
 void test_temperatureConversionError(void) {
-  bool errorThrown = false;
-  try {
-    // Intentionally using an invalid temperature unit to provoke an error
-    Thermometer::convertTemperature(100.0, static_cast<TemperatureUnit>(999), TemperatureUnit::Celsius);
-  } catch (const std::invalid_argument &e) {
-    errorThrown = true;
-  }
-  if (!errorThrown) {
-    TEST_FAIL_MESSAGE("Expected exception was not thrown.");
+  // Intentionally using an invalid temperature unit to provoke an error
+  double result = Thermometer::convertTemperature(100.0, static_cast<TemperatureUnit>(999), TemperatureUnit::Celsius);
+
+  // Check if the result is NaN, which signifies an error in this context
+  if (!isnan(result)) {
+    TEST_FAIL_MESSAGE("Conversion did not return NAN for an unsupported temperature unit.");
   }
 }
 

@@ -3,7 +3,7 @@
 #include "arduino_secrets.h"
 
 #include <Arduino.h>
-#include <Pt1000.h>
+#include <PlatinumRTD.h>
 
 #define DAC_PIN A0
 #define DAC_RESOLUTION 10
@@ -14,7 +14,7 @@ WiFiManager wifiManager;
 WiFiClient wifiClient;
 OpenMeteoManager openMeteoManager(wifiClient);
 
-Pt1000 sensor; // Create an instance of Pt1000
+PlatinumRTD sensor{1000}; // Create an instance of Pt1000
 
 int resistanceToDAC(double resistance);
 
@@ -38,6 +38,10 @@ void loop() {
   Serial.println("Temperature from API: " + String(temperature) + " °C");
 
   double resistance = sensor.calculateResistance(temperature, TemperatureUnit::Celsius);
+  if (isnan(resistance)) {
+    Serial.println("Resistance calculation failed due to invalid temperature conversion.");
+    return; // Skip the rest of the loop iteration.
+  }
   Serial.println("Calculated Resistance: " + String(resistance) + " Ω");
 
   int dacValue = resistanceToDAC(resistance);

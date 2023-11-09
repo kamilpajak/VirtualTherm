@@ -3,7 +3,7 @@
 #define THERMOMETER_H
 
 #include "TemperatureUnit.h"
-#include <stdexcept>
+#include <cmath> // Include this to use NAN
 
 class Thermometer {
 public:
@@ -21,7 +21,8 @@ double Thermometer::convertTemperature(double temperature, TemperatureUnit fromU
   } else if (fromUnit == TemperatureUnit::Kelvin) {
     tempCelsius = temperature - 273.15;
   } else if (fromUnit != TemperatureUnit::Celsius) {
-    throw std::invalid_argument("Unsupported 'from' temperature unit");
+    // Unsupported 'from' temperature unit, return NAN
+    return NAN;
   }
 
   // Then convert from Celsius to the desired unit
@@ -32,7 +33,8 @@ double Thermometer::convertTemperature(double temperature, TemperatureUnit fromU
   } else if (toUnit == TemperatureUnit::Kelvin) {
     return tempCelsius + 273.15;
   } else {
-    throw std::invalid_argument("Unsupported 'to' temperature unit");
+    // Unsupported 'to' temperature unit, return NAN
+    return NAN;
   }
 }
 
