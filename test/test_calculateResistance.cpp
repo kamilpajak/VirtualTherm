@@ -1,6 +1,7 @@
-#include <Pt100.h>
-#include <Pt1000.h>
+#include <NickelRTD.h>
+#include <PlatinumRTD.h>
 #include <TemperatureUnit.h>
+#include <stdexcept>
 #include <unity.h>
 
 void setUp(void) {
@@ -31,7 +32,7 @@ void assertResistanceWithinTolerance(RTD &sensor, double tolerance, double expec
 }
 
 void test_calculatePt100Resistance(void) {
-  Pt100 sensor;
+  PlatinumRTD sensor{100};
   const double TOLERANCE = 0.25;
   assertResistanceWithinTolerance(sensor, TOLERANCE, 18.49, -200.0, TemperatureUnit::Celsius);
   assertResistanceWithinTolerance(sensor, TOLERANCE, 100.00, 0.0, TemperatureUnit::Celsius);
@@ -43,7 +44,7 @@ void test_calculatePt100Resistance(void) {
 }
 
 void test_calculatePt1000Resistance(void) {
-  Pt1000 sensor;
+  PlatinumRTD sensor{1000};
   const double TOLERANCE = 0.05;
   assertResistanceWithinTolerance(sensor, TOLERANCE, 723.33, -70.0, TemperatureUnit::Celsius);
   assertResistanceWithinTolerance(sensor, TOLERANCE, 1000.00, 0.0, TemperatureUnit::Celsius);
@@ -54,10 +55,22 @@ void test_calculatePt1000Resistance(void) {
   assertResistanceWithinTolerance(sensor, TOLERANCE, 2809.80, 932.0, TemperatureUnit::Fahrenheit);
 }
 
+void test_calculateNi120Resistance(void) {
+  NickelRTD sensor{120};
+  const double TOLERANCE = 0.05;
+  // assertResistanceWithinTolerance(sensor, TOLERANCE, 66.60, -80.0, TemperatureUnit::Celsius);
+
+  // assertResistanceWithinTolerance(sensor, TOLERANCE, 67.32, -110.0, TemperatureUnit::Fahrenheit);
+  // assertResistanceWithinTolerance(sensor, TOLERANCE, 380.31, 500.0, TemperatureUnit::Fahrenheit);
+  assertResistanceWithinTolerance(sensor, TOLERANCE, 120.00, 0.0, TemperatureUnit::Celsius);
+  assertResistanceWithinTolerance(sensor, TOLERANCE, 127.17, 10.0, TemperatureUnit::Celsius);
+}
+
 int main(int argc, char **argv) {
   UNITY_BEGIN();
   RUN_TEST(test_temperatureConversionError);
   RUN_TEST(test_calculatePt100Resistance);
   RUN_TEST(test_calculatePt1000Resistance);
+  RUN_TEST(test_calculateNi120Resistance);
   UNITY_END();
 }
