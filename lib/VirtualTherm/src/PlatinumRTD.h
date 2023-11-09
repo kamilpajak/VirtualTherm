@@ -10,11 +10,11 @@ public:
   // Initialize R0 for PlatinumRTD in the constructor
   explicit PlatinumRTD(double r0) : RTD(r0) {}
 
-  // Override the calculateResistance using nickel-specific coefficients
+  // Override the calculateResistance using platinum-specific coefficients
   double calculateResistance(double temperature, TemperatureUnit unit) override;
 
 private:
-  // Nickel RTD coefficients shared across all instances
+  // Platinum RTD coefficients shared across all instances
   static constexpr double A = 3.9083e-3;   // First Callendar-Van Dusen coefficient
   static constexpr double B = -5.775e-7;   // Second Callendar-Van Dusen coefficient
   static constexpr double C0 = 0;          // Third Callendar-Van Dusen coefficient for temperatures above 0°C

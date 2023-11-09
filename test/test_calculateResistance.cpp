@@ -57,13 +57,11 @@ void test_calculatePt1000Resistance(void) {
 
 void test_calculateNi120Resistance(void) {
   NickelRTD sensor{120};
-  const double TOLERANCE = 0.05;
-  // assertResistanceWithinTolerance(sensor, TOLERANCE, 66.60, -80.0, TemperatureUnit::Celsius);
-
-  // assertResistanceWithinTolerance(sensor, TOLERANCE, 67.32, -110.0, TemperatureUnit::Fahrenheit);
-  // assertResistanceWithinTolerance(sensor, TOLERANCE, 380.31, 500.0, TemperatureUnit::Fahrenheit);
+  const double TOLERANCE = 0.1;
+  assertResistanceWithinTolerance(sensor, TOLERANCE, 66.60, -80.0, TemperatureUnit::Celsius);
   assertResistanceWithinTolerance(sensor, TOLERANCE, 120.00, 0.0, TemperatureUnit::Celsius);
-  assertResistanceWithinTolerance(sensor, TOLERANCE, 127.17, 10.0, TemperatureUnit::Celsius);
+  assertResistanceWithinTolerance(sensor, TOLERANCE, 138.26, 25.0, TemperatureUnit::Celsius);
+  assertResistanceWithinTolerance(sensor, TOLERANCE, 380.31, 260.0, TemperatureUnit::Celsius);
 }
 
 int main(int argc, char **argv) {

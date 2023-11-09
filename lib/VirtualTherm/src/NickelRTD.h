@@ -14,24 +14,21 @@ public:
   double calculateResistance(double temperature, TemperatureUnit unit) override;
 
 private:
-  // Nickel RTD coefficients shared across all instances
-  static constexpr double A = 5.485e-3;   // First coefficient
-  static constexpr double B = 6.650e-6;   // Second coefficient
-  static constexpr double C = 2.805e-11;  // Third coefficient for temperatures below 0°C
-  static constexpr double D = -2.000e-17; // Fourth coefficient for temperatures below 0°C
+  static constexpr double a = 0.005916007;           // Coefficient for temperature
+  static constexpr double b = 0.000006760135;        // Coefficient for temperature squared
+  static constexpr double c = 0.00000001997253;      // Coefficient for temperature cubed
+  static constexpr double d = -0.00000000009988596;  // Coefficient for temperature to the fourth
+  static constexpr double e = 0.0000000000002358126; // Coefficient for temperature to the fifth
 };
 
 inline double NickelRTD::calculateResistance(double temperature, TemperatureUnit unit) {
   temperature = Thermometer::convertTemperature(temperature, unit, TemperatureUnit::Celsius);
 
-  double Rt; // Resistance of the RTD at the given temperature
-  if (temperature >= 0) {
-    Rt = R0 * (1 + A * temperature + B * std::pow(temperature, 2));
-  } else {
-    Rt = R0 * (1 + A * temperature + B * std::pow(temperature, 2) + C * std::pow(temperature, 4) +
-               D * std::pow(temperature, 6));
-  }
-  return Rt;
+  // Use the polynomial equation derived from the curve fitting process
+  double resistance = R0 * (1 + a * temperature + b * std::pow(temperature, 2) + c * std::pow(temperature, 3) +
+                            d * std::pow(temperature, 4) + e * std::pow(temperature, 5));
+
+  return resistance;
 }
 
 #endif // NICKEL_RTD_H
