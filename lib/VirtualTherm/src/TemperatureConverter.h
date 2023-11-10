@@ -1,19 +1,20 @@
-// Thermometer.h
-#ifndef THERMOMETER_H
-#define THERMOMETER_H
+// TemperatureConverter.h
+#ifndef TEMPERATURE_CONVERTER_H
+#define TEMPERATURE_CONVERTER_H
 
 #include "TemperatureUnit.h"
 #include <cmath> // Include this to use NAN
 
-class Thermometer {
+class TemperatureConverter {
 public:
-  static double convertTemperature(double temperature, TemperatureUnit fromUnit, TemperatureUnit toUnit);
+  static double convert(double temperature, TemperatureUnit fromUnit, TemperatureUnit toUnit);
 
 private:
-  Thermometer() {} // Private constructor to prevent instantiation
+  TemperatureConverter() {} // Private constructor to prevent instantiation
 };
 
-double Thermometer::convertTemperature(double temperature, TemperatureUnit fromUnit, TemperatureUnit toUnit) {
+// The implementation would use TemperatureUnit directly
+double TemperatureConverter::convert(double temperature, TemperatureUnit fromUnit, TemperatureUnit toUnit) {
   // First convert the input to Celsius as a base for further conversion
   double tempCelsius = temperature;
   if (fromUnit == TemperatureUnit::Fahrenheit) {
@@ -38,4 +39,4 @@ double Thermometer::convertTemperature(double temperature, TemperatureUnit fromU
   }
 }
 
-#endif // THERMOMETER_H
+#endif // TEMPERATURE_CONVERTER_H

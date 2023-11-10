@@ -2,8 +2,8 @@
 #ifndef RTD_H
 #define RTD_H
 
+#include "TemperatureConverter.h"
 #include "TemperatureUnit.h"
-#include "Thermometer.h"
 
 class RTD {
 protected:

@@ -22,7 +22,7 @@ private:
 };
 
 inline double PlatinumRTD::calculateResistance(double temperature, TemperatureUnit unit) {
-  temperature = Thermometer::convertTemperature(temperature, unit, TemperatureUnit::Celsius);
+  temperature = TemperatureConverter::convert(temperature, unit, TemperatureUnit::Celsius);
   double Rt; // Resistance of the RTD at the given temperature
   if (temperature >= 0) {
     // Calculate resistance for temperatures above 0°C using Callendar-Van Dusen equation

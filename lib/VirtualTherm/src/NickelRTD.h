@@ -22,7 +22,7 @@ private:
 };
 
 inline double NickelRTD::calculateResistance(double temperature, TemperatureUnit unit) {
-  temperature = Thermometer::convertTemperature(temperature, unit, TemperatureUnit::Celsius);
+  temperature = TemperatureConverter::convert(temperature, unit, TemperatureUnit::Celsius);
 
   // Use the polynomial equation derived from the curve fitting process
   double resistance = R0 * (1 + a * temperature + b * std::pow(temperature, 2) + c * std::pow(temperature, 3) +

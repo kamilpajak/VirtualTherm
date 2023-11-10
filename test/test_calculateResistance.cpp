@@ -13,7 +13,7 @@ void tearDown(void) {
 
 void test_temperatureConversionError(void) {
   // Intentionally using an invalid temperature unit to provoke an error
-  double result = Thermometer::convertTemperature(100.0, static_cast<TemperatureUnit>(999), TemperatureUnit::Celsius);
+  double result = TemperatureConverter::convert(100.0, static_cast<TemperatureUnit>(999), TemperatureUnit::Celsius);
 
   // Check if the result is NaN, which signifies an error in this context
   if (!isnan(result)) {
