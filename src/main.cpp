@@ -1,18 +1,13 @@
 #include "OpenMeteoManager.h"
+#include "SensorOutputSimulator.h"
 #include "WiFiManager.h"
 #include "arduino_secrets.h"
 
 #include <Arduino.h>
 #include <PlatinumRTD.h>
 
-#define DAC_PIN A0
-#define DAC_RESOLUTION 10
-#define MAX_RESISTANCE 2000.0
-#define MAX_DAC_VALUE 4095
-
 // Constants for program behavior
 const int DelayBetweenMeasurements = 60000; // Delay between measurements in milliseconds
-const int MaxRetries = 5;                   // Number of retries for temperature retrieval
 
 WiFiManager wifiManager;
 WiFiClient wifiClient;
@@ -20,11 +15,11 @@ OpenMeteoManager openMeteoManager(wifiClient);
 
 PlatinumRTD sensor(1000); // Create an instance of PlatinumRTD with base resistance of 1000 ohms
 
-int resistanceToDAC(double resistance);
+// Initialize the SensorOutputSimulator with appropriate DAC settings
+SensorOutputSimulator dacSimulator(A0, 10, 2000.0, 4095);
 
 void setup() {
   Serial.begin(115200);
-  analogWriteResolution(DAC_RESOLUTION);
   wifiManager.init();
 }
 
@@ -43,19 +38,12 @@ void loop() {
 
   double resistance = sensor.calculateResistance(temperature, TemperatureUnit::Celsius);
   if (isnan(resistance)) {
-    Serial.println("Resistance calculation failed due to invalid temperature conversion.");
+    Serial.println("Resistance calculation failed. Check temperature range or sensor parameters.");
     return; // Wait for the next iteration of loop() to retry
   }
   Serial.println("Calculated Resistance: " + String(resistance) + " Ω");
 
-  int dacValue = resistanceToDAC(resistance);
-  analogWrite(DAC_PIN, dacValue);
+  dacSimulator.simulateResistance(resistance);
 
   delay(DelayBetweenMeasurements);
-}
-
-int resistanceToDAC(double resistance) {
-  int dacValue = (resistance / MAX_RESISTANCE) * MAX_DAC_VALUE;
-  dacValue = constrain(dacValue, 0, MAX_DAC_VALUE);
-  return dacValue;
 }
