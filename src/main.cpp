@@ -10,11 +10,15 @@
 #define MAX_RESISTANCE 2000.0
 #define MAX_DAC_VALUE 4095
 
+// Constants for program behavior
+const int DelayBetweenMeasurements = 60000; // Delay between measurements in milliseconds
+const int MaxRetries = 5;                   // Number of retries for temperature retrieval
+
 WiFiManager wifiManager;
 WiFiClient wifiClient;
 OpenMeteoManager openMeteoManager(wifiClient);
 
-PlatinumRTD sensor{1000}; // Create an instance of Pt1000
+PlatinumRTD sensor(1000); // Create an instance of PlatinumRTD with base resistance of 1000 ohms
 
 int resistanceToDAC(double resistance);
 
@@ -31,23 +35,23 @@ void loop() {
 
   double temperature = openMeteoManager.getTemperature();
   if (isnan(temperature)) {
-    Serial.println("Temperature retrieval failed. Retrying...");
-    // Optionally, add retry logic or error handling here.
-    return; // Skip the rest of the loop iteration.
+    Serial.println("Temperature retrieval failed.");
+    return; // Wait for the next iteration of loop() to retry
   }
+
   Serial.println("Temperature from API: " + String(temperature) + " °C");
 
   double resistance = sensor.calculateResistance(temperature, TemperatureUnit::Celsius);
   if (isnan(resistance)) {
     Serial.println("Resistance calculation failed due to invalid temperature conversion.");
-    return; // Skip the rest of the loop iteration.
+    return; // Wait for the next iteration of loop() to retry
   }
   Serial.println("Calculated Resistance: " + String(resistance) + " Ω");
 
   int dacValue = resistanceToDAC(resistance);
   analogWrite(DAC_PIN, dacValue);
 
-  delay(60000);
+  delay(DelayBetweenMeasurements);
 }
 
 int resistanceToDAC(double resistance) {
