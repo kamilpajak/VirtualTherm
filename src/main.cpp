@@ -16,7 +16,7 @@ OpenMeteoManager openMeteoManager(wifiClient);
 PlatinumRTD sensor(1000); // Create an instance of PlatinumRTD with base resistance of 1000 ohms
 
 // Initialize the SensorOutputSimulator with appropriate DAC settings
-SensorOutputSimulator dacSimulator(A0, 10, 2000.0, 4095);
+SensorOutputSimulator dacSimulator(A0, 10, 2000.0, 1023);
 
 void setup() {
   Serial.begin(115200);
