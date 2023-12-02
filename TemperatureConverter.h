@@ -3,7 +3,7 @@
 #define TEMPERATURE_CONVERTER_H
 
 #include "TemperatureUnit.h"
-#include <cmath> // Include this to use NAN
+#include <cmath>
 
 class TemperatureConverter {
 public:
@@ -13,7 +13,6 @@ private:
   TemperatureConverter() {} // Private constructor to prevent instantiation
 };
 
-// The implementation would use TemperatureUnit directly
 double TemperatureConverter::convert(double temperature, TemperatureUnit fromUnit, TemperatureUnit toUnit) {
   // First convert the input to Celsius as a base for further conversion
   double tempCelsius = temperature;

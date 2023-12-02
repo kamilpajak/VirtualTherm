@@ -3,7 +3,7 @@
 #define NICKEL_RTD_H
 
 #include "RTD.h"
-#include <cmath> // Include this to use std::pow
+#include <cmath>
 
 class NickelRTD : public RTD {
 public:

@@ -1,7 +1,8 @@
 # PlatformIO
 .pio/
+.pioenvs/
+.piolibdeps/
 .vscode/
-.idea/
 
 # Compiled files
 *.elf
