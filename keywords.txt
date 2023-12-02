@@ -1,0 +1,25 @@
+#######################################
+# Syntax Coloring Map For VirtualTherm
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+PlatinumRTD	KEYWORD1
+NickelRTD	KEYWORD1
+TemperatureUnit	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+calculateResistance	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+CELSIUS	LITERAL1
+FAHRENHEIT	LITERAL1
+KELVIN	LITERAL1

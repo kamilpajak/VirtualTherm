@@ -14,7 +14,6 @@ public:
   double calculateResistance(double temperature, TemperatureUnit unit) override;
 
 private:
-  // Platinum RTD coefficients shared across all instances
   static constexpr double A = 3.9083e-3;   // First Callendar-Van Dusen coefficient
   static constexpr double B = -5.775e-7;   // Second Callendar-Van Dusen coefficient
   static constexpr double C0 = 0;          // Third Callendar-Van Dusen coefficient for temperatures above 0°C
