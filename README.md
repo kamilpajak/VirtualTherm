@@ -41,7 +41,7 @@ Check out the `examples` directory for various ways to use the library with diff
 - `RTD_Temperature_Resistance_Conversion.ino`: Demonstrates converting temperature to resistance for different RTD types.
 
 ## License
-This library is released under the [MIT License](LICENSE).
+This library is released under the [BSD 3-Clause License](LICENSE).
 
 ## Acknowledgements
 Thank you to all the users and supporters of the VirtualTherm. Your engagement is greatly appreciated.
