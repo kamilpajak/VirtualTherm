@@ -3,6 +3,7 @@
 .pioenvs/
 .piolibdeps/
 .vscode/
+platformio.ini
 
 # Compiled files
 *.elf
